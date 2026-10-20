@@ -1,0 +1,83 @@
+# Generate the Xcode project on a Mac with:  brew install xcodegen && xcodegen
+name: LustKiller
+options:
+  bundleIdPrefix: com.gonowministries
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    # Put your Apple Developer Team ID here (Xcode > Settings > Accounts), or pick it in Xcode.
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1"
+
+targets:
+  LustKiller:
+    type: application
+    platform: iOS
+    sources: [App, Shared]
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: LustKiller
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+    entitlements:
+      path: App/LustKiller.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.gonowministries.lustkiller]
+        com.apple.developer.family-controls: true
+        com.apple.developer.sensitivecontentanalysis.client: [analysis]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gonowministries.lustkiller
+    dependencies:
+      - target: LustKillerBroadcast
+      - target: LustKillerShield
+
+  # Watches the screen while a broadcast is running and shows a verse when nudity is detected.
+  LustKillerBroadcast:
+    type: app-extension
+    platform: iOS
+    sources: [BroadcastExtension, Shared]
+    info:
+      path: BroadcastExtension/Info.plist
+      properties:
+        CFBundleDisplayName: LustKiller Guard
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.broadcast-services-upload
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).SampleHandler
+          RPBroadcastProcessMode: RPBroadcastProcessModeSampleBuffer
+    entitlements:
+      path: BroadcastExtension/LustKillerBroadcast.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.gonowministries.lustkiller]
+        com.apple.developer.sensitivecontentanalysis.client: [analysis]
+        com.apple.developer.usernotifications.time-sensitive: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gonowministries.lustkiller.broadcast
+
+  # Draws the Screen Time block screen (with a Bible verse) over shielded apps and sites.
+  LustKillerShield:
+    type: app-extension
+    platform: iOS
+    sources: [ShieldExtension, Shared]
+    info:
+      path: ShieldExtension/Info.plist
+      properties:
+        CFBundleDisplayName: LustKiller Shield
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettingsUI.shield-configuration-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldConfigurationExtension
+    entitlements:
+      path: ShieldExtension/LustKillerShield.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.gonowministries.lustkiller]
+        com.apple.developer.family-controls: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gonowministries.lustkiller.shield
