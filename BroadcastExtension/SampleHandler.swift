@@ -108,13 +108,13 @@ final class SampleHandler: RPBroadcastSampleHandler {
         case .banner:
             postVerseNotification(verse)
         case .fullScreen:
-            finish(message: "\(verse.formatted)\n\nLook away. Open LustKiller to start Screen Guard again.")
+            finish(message: "\(verse.identity).\n\n\(verse.formatted)\n\nThat is not who you are. Open LustKiller to start Screen Guard again.")
         }
     }
 
     private func postVerseNotification(_ verse: Verse) {
         let content = UNMutableNotificationContent()
-        content.title = "Turn your eyes away"
+        content.title = verse.identity
         content.subtitle = verse.reference
         content.body = verse.text
         content.sound = .default

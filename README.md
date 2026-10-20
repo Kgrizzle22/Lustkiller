@@ -3,7 +3,8 @@
 An iPhone app that helps you turn away from pornography. It does two things:
 
 1. **Screen Guard.** While it's on, it checks your screen about once a second with Apple's
-   built-in, on-device nudity detector. When it sees nudity, a Bible verse pops up.
+   built-in, on-device nudity detector. When it sees nudity, a Bible verse pops up to remind
+   you who you are in Christ.
 2. **Always-on blocking.** Uses Screen Time to turn on iOS's adult-website filter, and lets
    you block whole apps or sites. A blocked app shows a Bible verse instead of opening.
 
@@ -72,10 +73,11 @@ a weak night.
 | `App/` | The main app screen: setup steps, settings and the verse of the day |
 | `BroadcastExtension/` | Screen Guard: gets screen frames, checks them for nudity, shows a verse |
 | `ShieldExtension/` | The Screen Time block screen with a Bible verse |
-| `Shared/` | The Bible verses (KJV, public domain) and settings shared between the parts |
+| `Shared/` | The identity-in-Christ verses (KJV, public domain) and settings shared between the parts |
 | `project.yml` | Recipe XcodeGen uses to build the Xcode project |
 
-To add or change verses, edit `Shared/Verses.swift`.
+To add or change verses, edit `Shared/Verses.swift`. Each verse has a short "I am…" line
+(`identity`) that shows as the headline of the banner and the block screen.
 
 Tuning values are at the top of `BroadcastExtension/SampleHandler.swift`: how often the screen
 is checked (`checkInterval`), and the minimum time between two verse alerts (`alertCooldown`).

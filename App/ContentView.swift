@@ -38,9 +38,10 @@ struct ContentView: View {
     // MARK: - Sections
 
     private var verseOfTheDay: some View {
-        Section("Verse of the day") {
+        Section("Who you are in Christ") {
             let verse = Verses.ofTheDay()
             VStack(alignment: .leading, spacing: 8) {
+                Text(verse.identity).font(.title3.bold())
                 Text(verse.text).font(.body.italic())
                 Text(verse.reference).font(.footnote.bold()).foregroundStyle(.secondary)
             }
@@ -185,6 +186,7 @@ private struct VerseSheet: View {
         VStack(spacing: 24) {
             Spacer()
             Image(systemName: "book.closed.fill").font(.system(size: 48)).foregroundStyle(.tint)
+            Text(verse.identity).font(.largeTitle.bold()).multilineTextAlignment(.center)
             Text(verse.text).font(.title2.italic()).multilineTextAlignment(.center)
             Text(verse.reference).font(.headline).foregroundStyle(.secondary)
             Spacer()
